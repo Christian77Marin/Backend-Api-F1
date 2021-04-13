@@ -20,18 +20,18 @@ public class RootRest {
 	// Esta funcion si le pasas parametros te devuelve los datos de una sola
 	// carrera, si no pasas parametros te devuelve los datos de todas las carreras
 	@GetMapping
-	public List<Datum> Ranking(@RequestParam(name = "id", required = false, defaultValue = "all") String carrera) {
+	public List<Datum> Ranking(@RequestParam(name = "id", required = false, defaultValue = "all") String race) {
 
-		AppController.leerJson();
+		AppController.ReadJson();
 		r = AppController.getRootdata();
-		List<Datum> listaDeDatos;
-		listaDeDatos = r.getData();
-		listaDeDatos = AppController.DarPosicionATodos(listaDeDatos);
-		if (!carrera.equals("all")) {
-			for (int a = 0; a < listaDeDatos.size(); a++) {
-				for (int b = 0; b < listaDeDatos.get(a).races.size(); b++) {
-					if (!carrera.equals(listaDeDatos.get(a).getRaces().get(b).getName())) {
-						listaDeDatos.get(a).getRaces().remove(b);
+		List<Datum> dataList;
+		dataList = r.getData();
+		dataList = AppController.GivePositionAll(dataList);
+		if (!race.equals("all")) {
+			for (int a = 0; a < dataList.size(); a++) {
+				for (int b = 0; b < dataList.get(a).races.size(); b++) {
+					if (!race.equals(dataList.get(a).getRaces().get(b).getName())) {
+						dataList.get(a).getRaces().remove(b);
 						b--;
 					}
 				}
@@ -39,21 +39,21 @@ public class RootRest {
 
 		}
 
-		listaDeDatos = QuitarDatosSobrantes(listaDeDatos);
+		dataList = RemoveLeftOverData(dataList);
 
-		return listaDeDatos;
+		return dataList;
 	}
 
-	private List<Datum> QuitarDatosSobrantes(List<Datum> Datos) {
+	private List<Datum> RemoveLeftOverData(List<Datum> data) {
 
-		for (int a = 0; a < Datos.size(); a++) {
+		for (int a = 0; a < data.size(); a++) {
 
-			Datos.get(a)._id = null;
-			Datos.get(a).age = null;
+			data.get(a)._id = null;
+			data.get(a).age = null;
 
 		}
 
-		return Datos;
+		return data;
 
 	}
 

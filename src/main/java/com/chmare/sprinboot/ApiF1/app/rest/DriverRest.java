@@ -20,24 +20,24 @@ public class DriverRest {
 	// Se especifica un piloto y la api te devuelve los datos del mismo y todos sus
 	// datos en carreras en forma de json
 	@GetMapping
-	public Datum Driver(@RequestParam(name = "id", required = false, defaultValue = "all") String namePiloto) {
+	public Datum Driver(@RequestParam(name = "id", required = false, defaultValue = "all") String nameDriver) {
 
-		AppController.leerJson();
+		AppController.ReadJson();
 		r = AppController.getRootdata();
-		List<Datum> listaDeDatos;
-		Datum piloto = new Datum();
-		listaDeDatos = r.getData();
-		listaDeDatos = AppController.DarPosicionATodos(listaDeDatos);
+		List<Datum> dataList;
+		Datum driver = new Datum();
+		dataList = r.getData();
+		dataList = AppController.GivePositionAll(dataList);
 
-		for (int a = 0; a < listaDeDatos.size(); a++) {
+		for (int a = 0; a < dataList.size(); a++) {
 
-			if (namePiloto.equals(listaDeDatos.get(a).getName())) {
-				piloto = listaDeDatos.get(a);
+			if (nameDriver.equals(dataList.get(a).getName())) {
+				driver = dataList.get(a);
 			}
 
 		}
 
-		return piloto;
+		return driver;
 	}
 
 }

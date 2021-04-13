@@ -28,16 +28,16 @@ public class AppController {
 	}
 
 	// lee el json
-	public static void leerJson() {
+	public static void ReadJson() {
 
 		String json = "";
 
-		String ruta = "C:\\Users/cmarinre/Downloads/data.json";
+		String path = "C:\\Users/cmarinre/Downloads/data.json";
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(ruta));
-			String linea = "";
-			while ((linea = br.readLine()) != null) {
-				json += linea;
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				json += line;
 			}
 
 			br.close();
@@ -54,18 +54,18 @@ public class AppController {
 	}
 
 	// Da la posicion por cada carrera
-	public static List<Datum> DarPosicion(List<Datum> listaDeDatos, String Carrera) {
-		List<Date> listaDeTiempos = new ArrayList<Date>();
-		listaDeDatos = rootdata.getData();
+	public static List<Datum> DarPosicion(List<Datum> dataList, String Race) {
+		List<Date> timeList = new ArrayList<Date>();
+		dataList = rootdata.getData();
 		DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss.SSS");
 
-		for (int a = 0; a < listaDeDatos.size(); a++) {
-			for (int b = 0; b < listaDeDatos.get(a).races.size(); b++) {
-				if (listaDeDatos.get(a).races.get(b).name.equals(Carrera)) {
+		for (int a = 0; a < dataList.size(); a++) {
+			for (int b = 0; b < dataList.get(a).races.size(); b++) {
+				if (dataList.get(a).races.get(b).name.equals(Race)) {
 
 					try {
 
-						listaDeTiempos.add((Date) dateFormat.parse(listaDeDatos.get(a).races.get(b).getTime()));
+						timeList.add((Date) dateFormat.parse(dataList.get(a).races.get(b).getTime()));
 					} catch (ParseException e) {
 
 						e.printStackTrace();
@@ -74,17 +74,17 @@ public class AppController {
 			}
 		}
 
-		Collections.sort(listaDeTiempos);
+		Collections.sort(timeList);
 
 		for (int a = 0; a < rootdata.getData().size(); a++) {
 			for (int b = 0; b < rootdata.getData().get(a).getRaces().size(); b++) {
-				if (rootdata.getData().get(a).races.get(b).name.equals(Carrera)) {
-					for (int c = 0; c < listaDeTiempos.size(); c++) {
+				if (rootdata.getData().get(a).races.get(b).name.equals(Race)) {
+					for (int c = 0; c < timeList.size(); c++) {
 						Date date;
 						try {
 							date = (Date) dateFormat.parse(rootdata.getData().get(a).races.get(b).getTime());
 
-							if (date.equals(listaDeTiempos.get(c))) {
+							if (date.equals(timeList.get(c))) {
 								rootdata.getData().get(a).races.get(b).setPosition(c + 1);
 							}
 						} catch (ParseException e) {
@@ -95,22 +95,20 @@ public class AppController {
 				}
 			}
 		}
-		return listaDeDatos;
+		return dataList;
 	}
 
-	public static List<Datum> DarPosicionATodos(List<Datum> listaDeDatos) {
-		DarPosicion(listaDeDatos, "GP Barein");
-		DarPosicion(listaDeDatos, "GP Portugal");
-		DarPosicion(listaDeDatos, "GP Spain");
-		DarPosicion(listaDeDatos, "GP Monaco");
-		DarPosicion(listaDeDatos, "GP Italy");
-		DarPosicion(listaDeDatos, "GP Singapore");
-		DarPosicion(listaDeDatos, "GP Japan");
-		DarPosicion(listaDeDatos, "GP USA");
-		DarPosicion(listaDeDatos, "GP Australia");
-		DarPosicion(listaDeDatos, "GP Abu Dabi");
-
-		return listaDeDatos;
+	
+	public static List<Datum> GivePositionAll(List<Datum> dataList) {
+		
+		
+		for(int a = 0; a < dataList.get(0).races.size(); a++){
+			
+			DarPosicion(dataList, dataList.get(0).getRaces().get(a).getName());			
+		}
+		
+		
+		return dataList;
 
 	}
 
