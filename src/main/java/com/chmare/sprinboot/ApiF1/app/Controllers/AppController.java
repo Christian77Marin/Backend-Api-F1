@@ -54,7 +54,7 @@ public class AppController {
 	}
 
 	// Da la posicion por cada carrera
-	public static List<Datum> DarPosicion(List<Datum> dataList, String Race) {
+	public static List<Datum> GivePosition(List<Datum> dataList, String Race) {
 		List<Date> timeList = new ArrayList<Date>();
 		dataList = rootdata.getData();
 		DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss.SSS");
@@ -104,7 +104,7 @@ public class AppController {
 		
 		for(int a = 0; a < dataList.get(0).races.size(); a++){
 			
-			DarPosicion(dataList, dataList.get(0).getRaces().get(a).getName());			
+			GivePosition(dataList, dataList.get(0).getRaces().get(a).getName());			
 		}
 		
 		
