@@ -1,5 +1,6 @@
 package com.chmare.sprinboot.ApiF1.app.rest;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,10 @@ public class RootRest {
 		}
 
 		dataList = RemoveLeftOverData(dataList);
-
+		
+	if(race.equals("all")){Collections.sort(dataList, (o1, o2) -> o1.getGlobalPos().compareTo(o2.getGlobalPos()));}
+	if(!race.equals("all")){Collections.sort(dataList, (o1, o2) -> o1.getRaces().get(0).getPosition().compareTo(o2.getRaces().get(0).getPosition()));}
+	
 		return dataList;
 	}
 

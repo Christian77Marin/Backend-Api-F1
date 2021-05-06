@@ -23,6 +23,9 @@ public class Datum {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
     public String team;
 	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	public Integer globalPos;
+	
 
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -63,6 +66,12 @@ public class Datum {
 	}
 	public void setRaces(List<Race> races) {
 		this.races = races;
+	}
+	public Integer getGlobalPos() {
+		return globalPos;
+	}
+	public void setGlobalPos(Integer globalPos) {
+		this.globalPos = globalPos;
 	}
 	
 
